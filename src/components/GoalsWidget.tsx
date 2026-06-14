@@ -44,13 +44,15 @@ export default function GoalsWidget({ goals, createGoal }: GoalsWidgetProps) {
             <h3 className="font-display text-lg font-bold text-[#2C2C24]">
               Personalized Targets
             </h3>
-            <p className="text-[11px] text-[#8A887C]">Custom sustainability missions. Completing rewards 100 XP!</p>
+            <p className="text-[11px] text-[#525146]">Custom sustainability missions. Completing rewards 100 XP!</p>
           </div>
         </div>
 
         <button
           onClick={() => setShowCreator(!showCreator)}
           className="flex items-center gap-1 bg-[#5A5A40] text-white rounded-lg px-2.5 py-1.5 text-xs font-semibold hover:bg-[#41412E] transition-colors cursor-pointer"
+          aria-expanded={showCreator}
+          aria-label={showCreator ? "Show Actions" : "Create New Goal Target"}
         >
           {showCreator ? "Show Actions" : "Create Target"}
           {!showCreator && <Plus className="w-3.5 h-3.5" />}
@@ -70,8 +72,9 @@ export default function GoalsWidget({ goals, createGoal }: GoalsWidgetProps) {
             
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
               <div>
-                <label className="text-[10px] uppercase font-bold text-[#8A887C] block mb-1">Goal Action Title</label>
+                <label htmlFor="goal-title-input" className="text-[10px] uppercase font-bold text-[#525146] block mb-1">Goal Action Title</label>
                 <input
+                  id="goal-title-input"
                   type="text"
                   placeholder="e.g., Avoid 10kg CO2 from driving"
                   value={title}
@@ -82,8 +85,9 @@ export default function GoalsWidget({ goals, createGoal }: GoalsWidgetProps) {
               </div>
 
               <div>
-                <label className="text-[10px] uppercase font-bold text-[#8A887C] block mb-1">Impact Sector</label>
+                <label htmlFor="goal-category-select" className="text-[10px] uppercase font-bold text-[#525146] block mb-1">Impact Sector</label>
                 <select
+                  id="goal-category-select"
                   value={category}
                   onChange={(e) => setCategory(e.target.value)}
                   className="w-full text-xs text-[#2C2C24] px-2.5 py-2 rounded-lg border border-[#DCDAD2] focus:outline-none focus:ring-1 focus:ring-[#5A5A40] bg-white"
@@ -99,8 +103,9 @@ export default function GoalsWidget({ goals, createGoal }: GoalsWidgetProps) {
 
             <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
               <div>
-                <label className="text-[10px] uppercase font-bold text-[#8A887C] block mb-1">Target Type</label>
+                <label htmlFor="goal-unit-select" className="text-[10px] uppercase font-bold text-[#525146] block mb-1">Target Type</label>
                 <select
+                  id="goal-unit-select"
                   value={unit}
                   onChange={(e) => {
                     const selectedUnit = e.target.value as "kg CO2" | "habits";
@@ -115,8 +120,9 @@ export default function GoalsWidget({ goals, createGoal }: GoalsWidgetProps) {
               </div>
 
               <div>
-                <label className="text-[10px] uppercase font-bold text-[#8A887C] block mb-1">Target Required</label>
+                <label htmlFor="goal-target-input" className="text-[10px] uppercase font-bold text-[#525146] block mb-1">Target Required</label>
                 <input
+                  id="goal-target-input"
                   type="number"
                   min="1"
                   value={target}
@@ -127,8 +133,9 @@ export default function GoalsWidget({ goals, createGoal }: GoalsWidgetProps) {
               </div>
 
               <div>
-                <label className="text-[10px] uppercase font-bold text-[#8A887C] block mb-1">Deadline Date</label>
+                <label htmlFor="goal-deadline-input" className="text-[10px] uppercase font-bold text-[#525146] block mb-1">Deadline Date</label>
                 <input
+                  id="goal-deadline-input"
                   type="date"
                   value={deadline}
                   min={new Date().toISOString().split("T")[0]}
@@ -142,7 +149,7 @@ export default function GoalsWidget({ goals, createGoal }: GoalsWidgetProps) {
               <button
                 type="button"
                 onClick={() => setShowCreator(false)}
-                className="bg-[#F8F7F2] text-[#8A887C] rounded-lg px-3 py-1.5 text-xs font-semibold border border-[#DCDAD2] hover:bg-[#EBEAE3] transition-colors"
+                className="bg-[#F8F7F2] text-[#525146] rounded-lg px-3 py-1.5 text-xs font-semibold border border-[#DCDAD2] hover:bg-[#EBEAE3] transition-colors"
               >
                 Cancel
               </button>
@@ -175,17 +182,17 @@ export default function GoalsWidget({ goals, createGoal }: GoalsWidgetProps) {
                   }`}
                 >
                   {completed && (
-                    <div className="absolute right-[-15px] top-[-15px] opacity-10 text-[#708238]">
+                    <div className="absolute right-[-15px] top-[-15px] opacity-10 text-[#708238]" aria-hidden="true">
                       <Trophy className="w-16 h-16" />
                     </div>
                   )}
 
                   <div className="flex justify-between items-start">
                     <div>
-                      <h4 className={`text-xs font-bold leading-normal truncate max-w-[200px] ${completed ? "text-[#8A887C] line-through font-normal" : "text-[#2C2C24]"}`}>
+                      <h4 className={`text-xs font-bold leading-normal truncate max-w-[200px] ${completed ? "text-[#525146] line-through font-normal" : "text-[#2C2C24]"}`}>
                         {goal.title}
                       </h4>
-                      <p className="text-[10px] text-[#8A887C] capitalize mt-0.5">
+                      <p className="text-[10px] text-[#525146] capitalize mt-0.5">
                         Sector: {goal.category} &bull; Target: {goal.targetValue} {goal.unit}
                       </p>
                     </div>
@@ -196,7 +203,7 @@ export default function GoalsWidget({ goals, createGoal }: GoalsWidgetProps) {
                         Done!
                       </span>
                     ) : (
-                      <span className="text-[9px] text-[#8A887C] hover:text-[#2C2C24] flex items-center gap-0.5">
+                      <span className="text-[9px] text-[#525146] hover:text-[#2C2C24] flex items-center gap-0.5">
                         <Calendar className="w-3 h-3" />
                         By {goal.deadline}
                       </span>
@@ -209,7 +216,7 @@ export default function GoalsWidget({ goals, createGoal }: GoalsWidgetProps) {
                       <span>{pct}%</span>
                     </div>
 
-                    <div className="w-full bg-[#EBEAE3] h-1.5 rounded-full overflow-hidden">
+                    <div className="w-full bg-[#EBEAE3] h-1.5 rounded-full overflow-hidden" aria-hidden="true">
                       <motion.div
                         initial={{ width: 0 }}
                         animate={{ width: `${pct}%` }}
@@ -223,7 +230,7 @@ export default function GoalsWidget({ goals, createGoal }: GoalsWidgetProps) {
             })}
 
             {goals.length === 0 && (
-              <div className="col-span-2 text-center p-8 border border-dashed rounded-xl border-[#DCDAD2] text-[#8A887C]">
+              <div className="col-span-2 text-center p-8 border border-dashed rounded-xl border-[#DCDAD2] text-[#525146]">
                 <ShieldAlert className="w-6 h-6 text-slate-350 mx-auto mb-1.5" />
                 <p className="text-xs">No targets set yet. Challenge yourself with a new target above!</p>
               </div>

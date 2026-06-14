@@ -110,7 +110,7 @@ export default function TechEcologyWidget({ addImpactLog }: TechEcologyWidgetPro
             <h3 className="font-display text-lg font-bold text-[#2C2C24]">
               Tech & Electronics Ecology Hub
             </h3>
-            <p className="text-[11px] text-[#8A887C]">
+            <p className="text-[11px] text-[#525146]">
               Interactive energy reduction and servers storage footprint optimization.
             </p>
           </div>
@@ -135,10 +135,11 @@ export default function TechEcologyWidget({ addImpactLog }: TechEcologyWidgetPro
               {/* Slider 1: HD Streaming */}
               <div>
                 <div className="flex justify-between text-[11px] font-semibold text-[#2C2C24] mb-1">
-                  <span>HD Streaming / Video Calls</span>
+                  <label htmlFor="tech-slider-streaming">HD Streaming / Video Calls</label>
                   <span className="font-mono text-[#5A5A40]">{streamingHours} hrs/day</span>
                 </div>
                 <input
+                  id="tech-slider-streaming"
                   type="range"
                   min="0"
                   max="12"
@@ -147,16 +148,17 @@ export default function TechEcologyWidget({ addImpactLog }: TechEcologyWidgetPro
                   onChange={(e) => setStreamingHours(Number(e.target.value))}
                   className="w-full accent-[#5A5A40] h-1.5 bg-[#DCDAD2] rounded-lg cursor-pointer"
                 />
-                <span className="text-[9px] text-[#8A887C]">HD video generates ~150g CO₂ e per streaming hour</span>
+                <span className="text-[9px] text-[#525146]">HD video generates ~150g CO₂ e per streaming hour</span>
               </div>
 
               {/* Slider 2: Idle Cloud backups / spam */}
               <div>
                 <div className="flex justify-between text-[11px] font-semibold text-[#2C2C24] mb-1">
-                  <span>Excessive Cloud Standby Storage</span>
+                  <label htmlFor="tech-slider-cloud">Excessive Cloud Standby Storage</label>
                   <span className="font-mono text-[#5A5A40]">{cloudStorage} GB</span>
                 </div>
                 <input
+                  id="tech-slider-cloud"
                   type="range"
                   min="0"
                   max="200"
@@ -165,16 +167,17 @@ export default function TechEcologyWidget({ addImpactLog }: TechEcologyWidgetPro
                   onChange={(e) => setCloudStorage(Number(e.target.value))}
                   className="w-full accent-[#5A5A40] h-1.5 bg-[#DCDAD2] rounded-lg cursor-pointer"
                 />
-                <span className="text-[9px] text-[#8A887C]">1GB of unnecessary backups accounts for ~10g CO₂/month on server farms</span>
+                <span className="text-[9px] text-[#525146]">1GB of unnecessary backups accounts for ~10g CO₂/month on server farms</span>
               </div>
 
               {/* Slider 3: Vampire wall bricks */}
               <div>
                 <div className="flex justify-between text-[11px] font-semibold text-[#2C2C24] mb-1">
-                  <span>Vampire Sockets (Idle bricks plugged)</span>
+                  <label htmlFor="tech-slider-vampire">Vampire Sockets (Idle bricks plugged)</label>
                   <span className="font-mono text-[#5A5A40]">{vampireChargers} adapters</span>
                 </div>
                 <input
+                  id="tech-slider-vampire"
                   type="range"
                   min="0"
                   max="15"
@@ -183,7 +186,7 @@ export default function TechEcologyWidget({ addImpactLog }: TechEcologyWidgetPro
                   onChange={(e) => setVampireChargers(Number(e.target.value))}
                   className="w-full accent-[#5A5A40] h-1.5 bg-[#DCDAD2] rounded-lg cursor-pointer"
                 />
-                <span className="text-[9px] text-[#8A887C]">Adapters constantly leak backup phantom load when inactive</span>
+                <span className="text-[9px] text-[#525146]">Adapters constantly leak backup phantom load when inactive</span>
               </div>
             </div>
           </div>
@@ -191,7 +194,7 @@ export default function TechEcologyWidget({ addImpactLog }: TechEcologyWidgetPro
           {/* Footprint Indicator readout */}
           <div className="mt-6 pt-4 border-t border-[#EBEAE3] space-y-2.5">
             <div>
-              <p className="text-[10px] text-[#8A887C] uppercase tracking-wider font-bold">Estimated Tech Footprint</p>
+              <p className="text-[10px] text-[#525146] uppercase tracking-wider font-bold">Estimated Tech Footprint</p>
               <div className="flex items-baseline gap-1.5 mt-0.5">
                 <span className="font-display text-2xl font-black text-[#5A5A40] font-mono">
                   {totalTechFootprint.toFixed(1)}
@@ -203,11 +206,11 @@ export default function TechEcologyWidget({ addImpactLog }: TechEcologyWidgetPro
             {/* Equivalents list */}
             <div className="grid grid-cols-2 gap-2 bg-white/60 rounded-xl p-2.5 border border-[#EBEAE3]/60 text-[10px] text-[#2C2C24] select-none font-mono">
               <div>
-                <span className="text-[#8A887C] block leading-3 mb-0.5 font-sans font-bold uppercase text-[8px] tracking-wide">Vehicle Drive Equivalent</span>
+                <span className="text-[#525146] block leading-3 mb-0.5 font-sans font-bold uppercase text-[8px] tracking-wide">Vehicle Drive Equivalent</span>
                 <span className="text-[#2C2C24] font-black">{carMilesEquivalent.toFixed(1)} miles</span>
               </div>
               <div>
-                <span className="text-[#8A887C] block leading-3 mb-0.5 font-sans font-bold uppercase text-[8px] tracking-wide">Lightbulb Run time</span>
+                <span className="text-[#525146] block leading-3 mb-0.5 font-sans font-bold uppercase text-[8px] tracking-wide">Lightbulb Run time</span>
                 <span className="text-[#2C2C24] font-black">{Math.round(lightbulbHoursEquivalent)} light hours</span>
               </div>
             </div>
@@ -222,7 +225,7 @@ export default function TechEcologyWidget({ addImpactLog }: TechEcologyWidgetPro
               Eco Tech Action Checklist
             </h4>
             
-            <p className="text-xs text-[#8A887C] mb-3 leading-relaxed">
+            <p className="text-xs text-[#525146] mb-3 leading-relaxed">
               Earn green points & complete personal targets instantly by completing and logging any carbon-safe digital action below:
             </p>
 
@@ -243,7 +246,7 @@ export default function TechEcologyWidget({ addImpactLog }: TechEcologyWidgetPro
                         <h5 className="text-[11px] font-bold text-[#2C2C24] truncate leading-none">
                           {act.title}
                         </h5>
-                        <p className="text-[9px] text-[#8A887C] truncate mt-0.5">
+                        <p className="text-[9px] text-[#525146] truncate mt-0.5">
                           {act.benefit}
                         </p>
                       </div>
@@ -252,6 +255,7 @@ export default function TechEcologyWidget({ addImpactLog }: TechEcologyWidgetPro
                     <button
                       onClick={() => handleActionLog(act)}
                       disabled={isLogged}
+                      aria-label={`Log digital action: ${act.title}. ${act.benefit}`}
                       className={`flex items-center justify-center gap-1 text-[10px] font-bold rounded-lg px-2.5 py-1 transition-all cursor-pointer select-none ${
                         isLogged
                           ? "bg-emerald-500 text-white border border-emerald-500"

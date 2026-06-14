@@ -96,6 +96,8 @@ export default function App() {
           onClick={() => setSidebarOpen(!sidebarOpen)}
           className="absolute -right-3 top-24 bg-[#5A5A40] text-white rounded-full p-1 border border-[#DCDAD2] hover:bg-[#41412E] active:scale-90 transition-all shadow-sm z-50 cursor-pointer"
           title={sidebarOpen ? "Retract Sidebar" : "Expand Sidebar"}
+          aria-expanded={sidebarOpen}
+          aria-label={sidebarOpen ? "Collapse navigation sidebar" : "Expand navigation sidebar"}
         >
           {sidebarOpen ? <ChevronLeft className="w-3.5 h-3.5" /> : <ChevronRight className="w-3.5 h-3.5" />}
         </button>
@@ -125,6 +127,7 @@ export default function App() {
                     : "text-[#2C2C24] hover:bg-[#F8F7F2]"
                 }`}
                 title={item.label}
+                aria-label={`Navigate to ${item.label}`}
               >
                 <div className={`p-1.5 rounded-lg flex-shrink-0 transition-colors ${
                   isActive ? "bg-white/10 text-white" : "text-[#5A5A40] group-hover:bg-[#EBEAE3]"
@@ -134,7 +137,7 @@ export default function App() {
                 {sidebarOpen && (
                   <div className="overflow-hidden transition-all duration-200 animate-fade-in w-full">
                     <p className="text-[11px] font-black leading-none truncate">{item.label}</p>
-                    <p className={`text-[9px] truncate mt-0.5 ${isActive ? "text-[#F2F1EA]/80" : "text-[#8A887C]"}`}>
+                    <p className={`text-[9px] truncate mt-0.5 ${isActive ? "text-[#F2F1EA]/80" : "text-[#525146]"}`}>
                       {item.desc}
                     </p>
                   </div>
@@ -147,11 +150,11 @@ export default function App() {
         {/* Sidebar Footer Indicator */}
         <div className="p-3 border-t border-[#EBEAE3] text-center">
           {sidebarOpen ? (
-            <span className="text-[9px] text-[#8A887C] font-mono leading-none tracking-tight block">
+            <span className="text-[9px] text-[#525146] font-mono leading-none tracking-tight block">
               Sidebar Dock Active
             </span>
           ) : (
-            <LayoutGrid className="w-4 h-4 mx-auto text-[#8A887C]" />
+            <LayoutGrid className="w-4 h-4 mx-auto text-[#525146]" />
           )}
         </div>
       </aside>
@@ -169,7 +172,7 @@ export default function App() {
               <h1 className="font-display text-xl font-bold tracking-tight text-[#5A5A40] flex items-center gap-1.5">
                 Carbon Footprint & Habits Tracker
               </h1>
-              <p className="text-xs text-[#8A887C] font-medium">
+              <p className="text-xs text-[#525146] font-medium">
                 Gamified sustainability dashboards logging real-world environmental offsets.
               </p>
             </div>
@@ -198,7 +201,7 @@ export default function App() {
                   <p className="text-xs font-bold text-[#2C2C24] leading-tight">
                     {userProfile.displayName}
                   </p>
-                  <p className="text-[10px] text-[#8A887C] font-medium leading-none">
+                  <p className="text-[10px] text-[#525146] font-medium leading-none">
                     Guest Account
                   </p>
                 </div>
@@ -236,7 +239,7 @@ export default function App() {
                 <LayoutGrid className="w-4 h-4" />
                 Interactive Navigation Shortcuts
               </h3>
-              <p className="text-xs text-[#8A887C] mt-0.5">
+              <p className="text-xs text-[#525146] mt-0.5">
                 Rapidly jump to and flash highlight key system dashboards. Test this header tab interface versus the retractable sidebar!
               </p>
             </div>
@@ -262,6 +265,7 @@ export default function App() {
                       : "bg-[#F8F7F2] border-[#EBEAE3] hover:border-[#DCDAD2] text-[#2C2C24] hover:bg-[#EBEAE3]"
                   }`}
                   title={`Scroll to ${item.label}`}
+                  aria-label={`Jump shortcut path to dashboard: ${item.label}`}
                 >
                   {/* Subtle colored accent ring around icon */}
                   <div className={`p-2 rounded-lg mb-1.5 transition-colors ${
@@ -276,7 +280,7 @@ export default function App() {
                   
                   {/* Hover highlight line indicator */}
                   <span className={`absolute bottom-0 left-0 right-0 h-1 transition-all ${
-                    isActive ? "bg-[#708238]" : "bg-transparent group-hover:bg-[#8A887C]/30"
+                    isActive ? "bg-[#708238]" : "bg-transparent group-hover:bg-[#525146]/30"
                   }`} />
                 </button>
               );
@@ -337,7 +341,7 @@ export default function App() {
       </main>
 
       {/* Humble green footer */}
-      <footer className="mt-16 text-center text-[10px] text-[#8A887C] font-mono select-none pb-8">
+      <footer className="mt-16 text-center text-[10px] text-[#525146] font-mono select-none pb-8">
         <p>© 2026 Carbon & Habits Tracker &bull; Gamified Ecology Mission</p>
         <p className="mt-1">Crafted elegantly with a warm Natural Tones palette to motivate community carbon reductions</p>
       </footer>

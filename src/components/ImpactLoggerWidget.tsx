@@ -45,11 +45,11 @@ export default function ImpactLoggerWidget({ impactLogs, addImpactLog }: ImpactL
 
   const getActivityColor = (type: ActivityType) => {
     switch (type) {
-      case "driving": return "bg-[#F8F7F2] text-[#8A887C] border-[#EBEAE3] text-red-700/80";
+      case "driving": return "bg-[#F8F7F2] text-[#525146] border-[#EBEAE3] text-red-700/80";
       case "transport": return "bg-[#708238]/10 text-[#708238] border-[#708238]/20";
       case "electricity": return "bg-[#5A5A40]/10 text-[#5A5A40] border-[#5A5A40]/20";
       case "diet": return "bg-[#A3B18A]/15 text-[#708238] border-[#A3B18A]/30";
-      case "waste": return "bg-[#8A887C]/10 text-[#2C2C24] border-[#EBEAE3]";
+      case "waste": return "bg-[#525146]/10 text-[#2C2C24] border-[#EBEAE3]";
     }
   };
 
@@ -70,22 +70,25 @@ export default function ImpactLoggerWidget({ impactLogs, addImpactLog }: ImpactL
           <form onSubmit={handleSubmit} className="mt-4 space-y-4">
             {/* Sector selection */}
             <div>
-              <label className="text-xs uppercase tracking-wider font-semibold text-[#8A887C] block mb-1.5">
+              <span className="text-xs uppercase tracking-wider font-semibold text-[#525146] block mb-1.5">
                 Activity Category
-              </label>
-              <div className="grid grid-cols-5 gap-1.5">
+              </span>
+              <div className="grid grid-cols-5 gap-1.5" role="tablist" aria-label="Impact Category Options">
                 {(Object.keys(EMISSION_CONVERSIONS) as ActivityType[]).map((type) => (
                   <button
                     key={type}
                     type="button"
+                    role="tab"
+                    aria-selected={activeType === type}
+                    aria-label={`Select impact category of ${type}`}
                     onClick={() => {
                       setActiveType(type);
                       setQuantity(type === "diet" || type === "waste" ? 2 : 5);
                     }}
-                    className={`p-2 rounded-lg border text-center flex flex-col items-center gap-1 transition-all capitalize cursor-pointer ${
+                    className={`p-2 rounded-lg border text-center flex flex-col items-center gap-1 transition-all capitalize cursor-pointer focus:outline-none focus:ring-1 focus:ring-[#5A5A40] ${
                       activeType === type
                         ? "bg-[#5A5A40] text-white border-[#5A5A40] font-bold scale-[1.02]"
-                        : "bg-[#F8F7F2] text-[#8A887C] border-[#EBEAE3] hover:bg-[#EBEAE3] hover:text-[#2C2C24]"
+                        : "bg-[#F8F7F2] text-[#525146] border-[#EBEAE3] hover:bg-[#EBEAE3] hover:text-[#2C2C24]"
                     }`}
                   >
                     {getIcon(type)}
@@ -98,7 +101,7 @@ export default function ImpactLoggerWidget({ impactLogs, addImpactLog }: ImpactL
             {/* Quantity metric selector */}
             <div>
               <div className="flex justify-between items-center mb-1">
-                <label className="text-xs font-semibold text-[#2C2C24]">
+                <label id="impact-quantity-range-label" htmlFor="impact-quantity-range-input" className="text-xs font-semibold text-[#2C2C24]">
                   {conversionInfo.label}
                 </label>
                 <span className="text-xs font-mono font-bold text-[#2C2C24]">
@@ -106,7 +109,9 @@ export default function ImpactLoggerWidget({ impactLogs, addImpactLog }: ImpactL
                 </span>
               </div>
               <input
+                id="impact-quantity-range-input"
                 type="range"
+                aria-describedby="impact-quantity-range-label"
                 min="1"
                 max={activeType === "diet" || activeType === "waste" ? "10" : "50"}
                 step="1"
@@ -114,7 +119,7 @@ export default function ImpactLoggerWidget({ impactLogs, addImpactLog }: ImpactL
                 onChange={(e) => setQuantity(Number(e.target.value))}
                 className="w-full accent-[#5A5A40] h-2 bg-[#EBEAE3] rounded-lg cursor-pointer"
               />
-              <div className="flex justify-between text-[10px] text-[#8A887C] font-mono mt-1">
+              <div className="flex justify-between text-[10px] text-[#525146] font-mono mt-1">
                 <span>1 {conversionInfo.unit}</span>
                 <span>{activeType === "diet" || activeType === "waste" ? "10" : "50"} {conversionInfo.unit}</span>
               </div>
@@ -122,10 +127,11 @@ export default function ImpactLoggerWidget({ impactLogs, addImpactLog }: ImpactL
 
             {/* Custom explanations */}
             <div>
-              <label className="text-xs font-semibold text-[#2C2C24] block mb-1">
+              <label htmlFor="impact-notes-text-input" className="text-xs font-semibold text-[#2C2C24] block mb-1">
                 Notes / Context (Optional)
               </label>
               <input
+                id="impact-notes-text-input"
                 type="text"
                 placeholder={conversionInfo.placeholder}
                 value={notes}
@@ -144,7 +150,7 @@ export default function ImpactLoggerWidget({ impactLogs, addImpactLog }: ImpactL
               <span className="font-display text-lg font-extrabold text-[#2C2C24] font-mono">
                 {calculatedSavings} kg CO₂
               </span>
-              <span className="text-xs text-[#8A887C]">avoided</span>
+              <span className="text-xs text-[#525146]">avoided</span>
             </div>
             <p className="text-[10px] text-[#708238] mt-1 font-semibold">
               🎁 Awards +{calculatedPoints} XP Points instantly
@@ -207,7 +213,7 @@ export default function ImpactLoggerWidget({ impactLogs, addImpactLog }: ImpactL
                         <h5 className="text-xs font-bold text-[#2C2C24] capitalize">
                           Logged {log.quantity} {log.unit}
                         </h5>
-                        <p className="text-[10px] text-[#8A887C] font-medium">
+                        <p className="text-[10px] text-[#525146] font-medium">
                           {log.notes || `Category: ${log.activityType} offsetting Carbon`}
                         </p>
                       </div>
@@ -217,14 +223,14 @@ export default function ImpactLoggerWidget({ impactLogs, addImpactLog }: ImpactL
                       <span className="text-xs font-bold text-[#708238] font-mono block">
                         -{log.carbonSaved} kg
                       </span>
-                      <span className="text-[10px] text-[#8A887C] font-mono font-bold">
+                      <span className="text-[10px] text-[#525146] font-mono font-bold">
                         +{log.pointsEarned} XP
                       </span>
                     </div>
                   </motion.div>
                 ))
               ) : (
-                <div className="text-center p-12 text-[#8A887C]">
+                <div className="text-center p-12 text-[#525146]">
                   <p className="text-xs">No metrics logged yet. Make your first entry on the left!</p>
                 </div>
               )}
@@ -232,7 +238,7 @@ export default function ImpactLoggerWidget({ impactLogs, addImpactLog }: ImpactL
           </div>
         </div>
 
-        <div className="text-right mt-4 text-[10px] text-[#8A887C] font-mono">
+        <div className="text-right mt-4 text-[10px] text-[#525146] font-mono">
           Logs calculate real-time environmental savings dynamically
         </div>
       </div>

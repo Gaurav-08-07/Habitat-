@@ -16,25 +16,25 @@ export default function LeaderboardWidget({ entries, currentUserId }: Leaderboar
     switch (rank) {
       case 1:
         return (
-          <span className="flex items-center justify-center bg-amber-50 text-amber-700 border border-amber-200 w-6 h-6 rounded-full text-xs font-black shadow-sm">
+          <span className="flex items-center justify-center bg-amber-50 text-amber-700 border border-amber-200 w-6 h-6 rounded-full text-xs font-black shadow-sm" aria-hidden="true">
             🥇
           </span>
         );
       case 2:
         return (
-          <span className="flex items-center justify-center bg-[#F8F7F2] text-[#8A887C] border border-[#DCDAD2] w-6 h-6 rounded-full text-xs font-black">
+          <span className="flex items-center justify-center bg-[#F8F7F2] text-[#525146] border border-[#DCDAD2] w-6 h-6 rounded-full text-xs font-black" aria-hidden="true">
             🥈
           </span>
         );
       case 3:
         return (
-          <span className="flex items-center justify-center bg-amber-50 text-amber-900 border border-amber-100 w-6 h-6 rounded-full text-xs font-black">
+          <span className="flex items-center justify-center bg-amber-50 text-amber-900 border border-amber-100 w-6 h-6 rounded-full text-xs font-black" aria-hidden="true">
             🥉
           </span>
         );
       default:
         return (
-          <span className="flex items-center justify-center bg-[#F8F7F2] text-[#8A887C] w-6 h-6 rounded-full text-[11px] font-bold font-mono">
+          <span className="flex items-center justify-center bg-[#F8F7F2] text-[#525146] w-6 h-6 rounded-full text-[11px] font-bold font-mono">
             {rank}
           </span>
         );
@@ -53,7 +53,7 @@ export default function LeaderboardWidget({ entries, currentUserId }: Leaderboar
               <h3 className="font-display text-lg font-bold text-[#2C2C24]">
                 Community Board
               </h3>
-              <p className="text-[11px] text-[#8A887C]">Compete with friends and local climate peers.</p>
+              <p className="text-[11px] text-[#525146]">Compete with friends and local climate peers.</p>
             </div>
           </div>
           <span className="text-xs bg-[#708238]/10 text-[#708238] border border-[#708238]/20 px-2.5 py-0.5 rounded-full font-bold flex items-center gap-1">
@@ -103,7 +103,7 @@ export default function LeaderboardWidget({ entries, currentUserId }: Leaderboar
                     <h5 className={`text-xs font-black truncate max-w-[120px] ${isMe ? "text-white" : "text-[#2C2C24]"}`}>
                       {entry.displayName}
                     </h5>
-                    <p className={`text-[10px] ${isMe ? "text-[#A3B18A] font-semibold" : "text-[#8A887C] font-medium"}`}>
+                    <p className={`text-[10px] ${isMe ? "text-[#A3B18A] font-semibold" : "text-[#525146] font-medium"}`}>
                       Lvl {entry.level} &bull; {entry.points} XP
                     </p>
                   </div>
@@ -113,14 +113,14 @@ export default function LeaderboardWidget({ entries, currentUserId }: Leaderboar
                   <span className={`text-xs font-mono font-bold ${isMe ? "text-[#A3B18A]" : "text-[#708238]"}`}>
                     -{entry.totalOffset.toFixed(1)} kg
                   </span>
-                  <p className="text-[9px] text-[#8A887C] font-mono leading-none mt-0.5">offset</p>
+                  <p className="text-[9px] text-[#525146] font-mono leading-none mt-0.5">offset</p>
                 </div>
               </div>
             );
           })}
 
           {entries.length === 0 && (
-            <div className="text-center p-12 text-[#8A887C]">
+            <div className="text-center p-12 text-[#525146]">
               <ShieldAlert className="w-5 h-5 mx-auto mb-1.5" />
               <p className="text-xs">Leaderboard data initializing...</p>
             </div>
@@ -128,7 +128,7 @@ export default function LeaderboardWidget({ entries, currentUserId }: Leaderboar
         </div>
       </div>
 
-      <div className="border-t border-[#F8F7F2] pt-3.5 mt-4 text-[10px] text-[#8A887C] text-center">
+      <div className="border-t border-[#F8F7F2] pt-3.5 mt-4 text-[10px] text-[#525146] text-center">
         Leaderboard updates in real-time as users save emissions!
       </div>
     </div>

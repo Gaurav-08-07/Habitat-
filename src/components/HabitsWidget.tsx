@@ -29,7 +29,7 @@ export default function HabitsWidget({ habitLogs, completeHabit, todayString }: 
       case "energy": return "text-[#5A5A40] bg-[#5A5A40]/10 border-[#5A5A40]/20";
       case "diet": return "text-[#A3B18A] bg-[#A3B18A]/10 border-[#A3B18A]/20";
       case "water": return "text-[#A3B18A] bg-[#A3B18A]/10 border-[#A3B18A]/20";
-      case "waste": return "text-[#8A887C] bg-[#8A887C]/10 border-[#8A887C]/20";
+      case "waste": return "text-[#525146] bg-[#525146]/10 border-[#525146]/20";
       default: return "text-[#2C2C24] bg-[#F8F7F2] border-[#EBEAE3]";
     }
   };
@@ -44,19 +44,22 @@ export default function HabitsWidget({ habitLogs, completeHabit, todayString }: 
             </span>
             Completed Sustainable Habits
           </h2>
-          <p className="text-xs text-[#8A887C] mt-1">Check off green habits daily to gain points and lower carbon counts.</p>
+          <p className="text-xs text-[#525146] mt-1">Check off green habits daily to gain points and lower carbon counts.</p>
         </div>
 
         {/* Categories scroll menu */}
-        <div className="flex gap-1 overflow-x-auto py-1 no-scrollbar -mx-4 px-4 sm:mx-0 sm:px-0">
+        <div className="flex gap-1 overflow-x-auto py-1 no-scrollbar -mx-4 px-4 sm:mx-0 sm:px-0" role="tablist" aria-label="Habit Categories">
           {categories.map((cat) => (
             <button
               key={cat}
+              role="tab"
+              aria-selected={activeCategory === cat}
+              aria-label={`Show ${cat} habits`}
               onClick={() => setActiveCategory(cat)}
               className={`text-xs capitalize font-semibold px-3 py-1.5 rounded-full border transition-all cursor-pointer whitespace-nowrap ${
                 activeCategory === cat
                   ? "bg-[#5A5A40] text-white border-[#5A5A40]"
-                  : "bg-[#F8F7F2] text-[#8A887C] border-[#EBEAE3] hover:bg-[#EBEAE3]"
+                  : "bg-[#F8F7F2] text-[#525146] border-[#EBEAE3] hover:bg-[#EBEAE3]"
               }`}
             >
               {cat}
@@ -77,26 +80,36 @@ export default function HabitsWidget({ habitLogs, completeHabit, todayString }: 
                 initial={{ opacity: 0, scale: 0.95 }}
                 animate={{ opacity: 1, scale: 1 }}
                 exit={{ opacity: 0, scale: 0.95 }}
+                role="checkbox"
+                aria-checked={completed}
+                aria-label={`Log habit: ${habit.title}. Saves ${habit.co2Saved} kilograms of carbon dioxide, yields ${habit.points} XP.`}
+                tabIndex={0}
                 onClick={() => completeHabit(habit.id)}
-                className={`flex justify-between items-start p-3.5 rounded-xl border-2 transition-all cursor-pointer ${
+                onKeyDown={(e) => {
+                  if (e.key === "Enter" || e.key === " ") {
+                    e.preventDefault();
+                    completeHabit(habit.id);
+                  }
+                }}
+                className={`flex justify-between items-start p-3.5 rounded-xl border-2 transition-all cursor-pointer focus:outline-none focus:ring-2 focus:ring-[#5A5A40] ${
                   completed
                     ? "bg-[#708238]/10 border-[#708238] shadow-sm"
                     : "bg-[#F8F7F2]/50 border-[#EBEAE3] hover:bg-[#F8F7F2] hover:border-[#DCDAD2]"
                 }`}
               >
                 <div className="flex gap-3">
-                  <button className="mt-0.5 text-[#8A887C] hover:text-[#708238] transition-colors">
+                  <div className={`mt-0.5 transition-colors ${completed ? "text-[#708238]" : "text-[#525146]"}`} aria-hidden="true">
                     {completed ? (
-                      <CheckCircle2 className="w-5.5 h-5.5 text-[#708238]" />
+                      <CheckCircle2 className="w-5.5 h-5.5" />
                     ) : (
                       <Circle className="w-5.5 h-5.5 hover:scale-105 transition-transform" />
                     )}
-                  </button>
+                  </div>
                   <div>
                     <h4 className={`text-sm font-bold ${completed ? "text-[#5A5A40]" : "text-[#2C2C24]"}`}>
                       {habit.title}
                     </h4>
-                    <p className="text-xs text-[#8A887C] mt-0.5 leading-relaxed">
+                    <p className="text-xs text-[#525146] mt-0.5 leading-relaxed">
                       {habit.description}
                     </p>
                     <div className="flex items-center gap-2 mt-2">
@@ -111,7 +124,7 @@ export default function HabitsWidget({ habitLogs, completeHabit, todayString }: 
                 </div>
 
                 <div className="text-right">
-                  <span className={`text-xs font-mono font-bold ${completed ? "text-[#708238]" : "text-[#8A887C]"}`}>
+                  <span className={`text-xs font-mono font-bold ${completed ? "text-[#708238]" : "text-[#525146]"}`}>
                     +{habit.points} XP
                   </span>
                 </div>
@@ -122,7 +135,7 @@ export default function HabitsWidget({ habitLogs, completeHabit, todayString }: 
       </div>
 
       {habitLogs.filter(l => l.date === todayString).length === 0 && (
-        <div className="mt-4 text-center p-6 bg-[#F8F7F2]/50 border border-dashed border-[#DCDAD2] rounded-xl text-[#8A887C]">
+        <div className="mt-4 text-center p-6 bg-[#F8F7F2]/50 border border-dashed border-[#DCDAD2] rounded-xl text-[#525146]">
           <p className="text-xs">No habits checked off today. Tap above to get started!</p>
         </div>
       )}

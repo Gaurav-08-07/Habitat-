@@ -39,6 +39,7 @@ export default function AICoachWidget({ suggestions, loading, error, onRefresh }
             disabled={loading}
             className="p-1.5 rounded-lg bg-[#708238]/20 border border-[#708238]/40 hover:bg-[#708238]/40 transition-colors cursor-pointer group disabled:opacity-40"
             title="Refresh green suggestions"
+            aria-label="Refresh green suggestions"
           >
             <RefreshCw className={`w-3.5 h-3.5 text-[#A3B18A] ${loading ? "animate-spin" : "group-hover:rotate-45 transition-transform"}`} />
           </button>
