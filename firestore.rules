@@ -1,0 +1,137 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // Global default-deny safety net
+    match /{document=**} {
+      allow read, write: if false;
+    }
+
+    // Helper functions
+    function isSignedIn() {
+      return request.auth != null;
+    }
+
+    function isOwner(userId) {
+      return isSignedIn() && request.auth.uid == userId;
+    }
+
+    function isEmailVerified() {
+      return isSignedIn() && (
+        request.auth.token.email_verified == true || 
+        request.auth.token.firebase.sign_in_provider == 'anonymous'
+      );
+    }
+
+    function isValidId(id) {
+      return id is string && id.size() <= 128 && id.matches('^[a-zA-Z0-9_\\-]+$');
+    }
+
+    function incoming() {
+      return request.resource.data;
+    }
+
+    function existing() {
+      return resource.data;
+    }
+
+    // Entity validator definitions
+    function isValidUser(data) {
+      return data.keys().hasAll(['userId', 'displayName', 'email', 'avatarUrl', 'points', 'level', 'totalOffset', 'createdAt', 'updatedAt'])
+        && data.keys().size() == 9
+        && data.userId is string && data.userId.size() <= 128
+        && data.displayName is string && data.displayName.size() <= 200
+        && data.email is string && data.email.size() <= 200
+        && data.avatarUrl is string && data.avatarUrl.size() <= 500
+        && data.points is int && data.points >= 0
+        && data.level is int && data.level >= 1
+        && (data.totalOffset is int || data.totalOffset is float) && data.totalOffset >= 0.0
+        && data.createdAt is string && data.createdAt.size() <= 30
+        && data.updatedAt is string && data.updatedAt.size() <= 30;
+    }
+
+    function isValidHabitLog(data) {
+      return data.keys().hasAll(['logId', 'userId', 'habitId', 'habitTitle', 'category', 'pointsEarned', 'carbonSaved', 'date', 'loggedAt'])
+        && data.keys().size() == 9
+        && data.logId is string && data.logId.size() <= 256
+        && data.userId is string && data.userId.size() <= 128
+        && data.habitId is string && data.habitId.size() <= 128
+        && data.habitTitle is string && data.habitTitle.size() <= 200
+        && data.category is string && data.category.size() <= 100
+        && data.pointsEarned is int && data.pointsEarned >= 0
+        && (data.carbonSaved is int || data.carbonSaved is float) && data.carbonSaved >= 0.0
+        && data.date is string && data.date.size() == 10
+        && data.loggedAt is string && data.loggedAt.size() <= 30;
+    }
+
+    function isValidImpactLog(data) {
+      return data.keys().hasAll(['logId', 'userId', 'activityType', 'quantity', 'unit', 'carbonSaved', 'pointsEarned', 'notes', 'loggedAt'])
+        && data.keys().size() == 9
+        && data.logId is string && data.logId.size() <= 128
+        && data.userId is string && data.userId.size() <= 128
+        && data.activityType is string && data.activityType.size() <= 50
+        && (data.quantity is int || data.quantity is float) && data.quantity >= 0.0
+        && data.unit is string && data.unit.size() <= 50
+        && (data.carbonSaved is int || data.carbonSaved is float) && data.carbonSaved >= 0.0
+        && data.pointsEarned is int && data.pointsEarned >= 0
+        && data.notes is string && data.notes.size() <= 500
+        && data.loggedAt is string && data.loggedAt.size() <= 30;
+    }
+
+    function isValidGoal(data) {
+      return data.keys().hasAll(['goalId', 'userId', 'title', 'category', 'targetValue', 'currentValue', 'unit', 'status', 'deadline', 'createdAt'])
+        && data.keys().size() == 10
+        && data.goalId is string && data.goalId.size() <= 128
+        && data.userId is string && data.userId.size() <= 128
+        && data.title is string && data.title.size() <= 200
+        && data.category is string && data.category.size() <= 100
+        && (data.targetValue is int || data.targetValue is float) && data.targetValue >= 0.0
+        && (data.currentValue is int || data.currentValue is float) && data.currentValue >= 0.0
+        && data.unit is string && data.unit.size() <= 50
+        && data.status is string && (data.status == 'active' || data.status == 'completed')
+        && data.deadline is string && data.deadline.size() == 10
+        && data.createdAt is string && data.createdAt.size() <= 30;
+    }
+
+    // Rules for matching /users/{userId}
+    match /users/{userId} {
+      // Allowed queries for community leaderboards securely
+      allow get, list: if isSignedIn();
+      
+      allow create: if isOwner(userId) && isEmailVerified() && isValidUser(incoming());
+      
+      // Strict update partition per identity tiers (Points, relative offsets)
+      allow update: if isOwner(userId) && isEmailVerified() && isValidUser(incoming())
+        && incoming().userId == existing().userId 
+        && incoming().createdAt == existing().createdAt;
+        
+      allow delete: if false;
+
+      // Subcollection for everyday logged sustainable habits
+      match /habitLogs/{logId} {
+        allow read: if isOwner(userId);
+        allow create: if isOwner(userId) && isEmailVerified() && isValidHabitLog(incoming()) && isValidId(logId);
+        allow delete: if isOwner(userId) && isEmailVerified();
+        allow update: if false; // habit logs are completely immutable once sent
+      }
+
+      // Subcollection for custom real-time carbon logger inputs
+      match /impactLogs/{logId} {
+        allow read: if isOwner(userId);
+        allow create: if isOwner(userId) && isEmailVerified() && isValidImpactLog(incoming()) && isValidId(logId);
+        allow delete, update: if false; // absolutely immutable footprint metrics
+      }
+
+      // Subcollection for active goal-driven missions
+      match /goals/{goalId} {
+        allow read: if isOwner(userId);
+        allow create: if isOwner(userId) && isEmailVerified() && isValidGoal(incoming()) && isValidId(goalId);
+        allow update: if isOwner(userId) && isEmailVerified() && isValidGoal(incoming()) && isValidId(goalId)
+          && incoming().goalId == existing().goalId
+          && incoming().userId == existing().userId
+          && incoming().createdAt == existing().createdAt;
+        allow delete: if false;
+      }
+    }
+  }
+}

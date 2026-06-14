@@ -1,0 +1,178 @@
+{
+  "entities": {
+    "User": {
+      "title": "User",
+      "description": "User profile with points, levels, and environmental stats",
+      "type": "object",
+      "properties": {
+        "userId": {
+          "type": "string",
+          "description": "Unique identifier of the user matching Firebase Auth UID"
+        },
+        "displayName": {
+          "type": "string"
+        },
+        "email": {
+          "type": "string"
+        },
+        "avatarUrl": {
+          "type": "string"
+        },
+        "points": {
+          "type": "integer"
+        },
+        "level": {
+          "type": "integer"
+        },
+        "totalOffset": {
+          "type": "number",
+          "description": "Total carbon offset tracked in kilograms of CO2"
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time"
+        },
+        "updatedAt": {
+          "type": "string",
+          "format": "date-time"
+        }
+      },
+      "required": ["userId", "displayName", "email", "points", "level", "totalOffset", "createdAt", "updatedAt"]
+    },
+    "HabitLog": {
+      "title": "HabitLog",
+      "description": "Indicates completion of a daily sustainable habit",
+      "type": "object",
+      "properties": {
+        "logId": {
+          "type": "string",
+          "description": "Formed as userId_habitId_YYYY-MM-DD"
+        },
+        "userId": {
+          "type": "string"
+        },
+        "habitId": {
+          "type": "string"
+        },
+        "habitTitle": {
+          "type": "string"
+        },
+        "category": {
+          "type": "string"
+        },
+        "pointsEarned": {
+          "type": "integer"
+        },
+        "carbonSaved": {
+          "type": "number",
+          "description": "Carbon saved in kilograms of CO2"
+        },
+        "date": {
+          "type": "string",
+          "format": "date"
+        },
+        "loggedAt": {
+          "type": "string",
+          "format": "date-time"
+        }
+      },
+      "required": ["logId", "userId", "habitId", "habitTitle", "category", "pointsEarned", "carbonSaved", "date", "loggedAt"]
+    },
+    "ImpactLog": {
+      "title": "ImpactLog",
+      "description": "Real-time logging of user activity impact (energy, water, driving, diet)",
+      "type": "object",
+      "properties": {
+        "logId": {
+          "type": "string"
+        },
+        "userId": {
+          "type": "string"
+        },
+        "activityType": {
+          "type": "string",
+          "enum": ["driving", "transport", "electricity", "diet", "waste"]
+        },
+        "quantity": {
+          "type": "number"
+        },
+        "unit": {
+          "type": "string"
+        },
+        "carbonSaved": {
+          "type": "number"
+        },
+        "pointsEarned": {
+          "type": "integer"
+        },
+        "notes": {
+          "type": "string"
+        },
+        "loggedAt": {
+          "type": "string",
+          "format": "date-time"
+        }
+      },
+      "required": ["logId", "userId", "activityType", "quantity", "unit", "carbonSaved", "pointsEarned", "loggedAt"]
+    },
+    "Goal": {
+      "title": "Goal",
+      "description": "Custom user sustainability goals",
+      "type": "object",
+      "properties": {
+        "goalId": {
+          "type": "string"
+        },
+        "userId": {
+          "type": "string"
+        },
+        "title": {
+          "type": "string"
+        },
+        "category": {
+          "type": "string"
+        },
+        "targetValue": {
+          "type": "number"
+        },
+        "currentValue": {
+          "type": "number"
+        },
+        "unit": {
+          "type": "string"
+        },
+        "status": {
+          "type": "string",
+          "enum": ["active", "completed"]
+        },
+        "deadline": {
+          "type": "string",
+          "format": "date"
+        },
+        "createdAt": {
+          "type": "string",
+          "format": "date-time"
+        }
+      },
+      "required": ["goalId", "userId", "title", "category", "targetValue", "currentValue", "unit", "status", "deadline", "createdAt"]
+    }
+  },
+  "firestore": {
+    "/users/{userId}": {
+      "schema": "User",
+      "description": "User profiles containing cumulative carbon and gamification points achievements."
+    },
+    "/users/{userId}/habitLogs/{logId}": {
+      "schema": "HabitLog",
+      "description": "Daily logged sustainable habits, tracked with date-key and user points."
+    },
+    "/users/{userId}/impactLogs/{logId}": {
+      "schema": "ImpactLog",
+      "description": "Custom calculated CO2 emissions tracker inputs."
+    },
+    "/users/{userId}/goals/{goalId}": {
+      "schema": "Goal",
+      "description": "Custom sustainable targets defined by the individual user."
+    }
+  }
+}
