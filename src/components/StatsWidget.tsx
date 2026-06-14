@@ -72,20 +72,20 @@ export default function StatsWidget({ profile, habitLogs, impactLogs }: StatsWid
         
         <div className="flex justify-between items-start z-10">
           <div>
-            <p className="text-xs uppercase tracking-widest text-[#A3B18A] font-bold">Real-Time Impact</p>
+            <p className="text-xs uppercase tracking-widest text-[#C4ECCF] font-bold">Real-Time Impact</p>
             <h3 className="font-display text-4xl font-bold mt-1 tracking-tight text-white">
               {profile.totalOffset.toFixed(1)} <span className="text-xl font-light opacity-90">kg CO₂</span>
             </h3>
             <p className="text-[#F2F1EA]/80 text-xs mt-1">Total emissions offset or avoided</p>
           </div>
           <div className="bg-[#708238]/50 p-2.5 rounded-lg border border-[#A3B18A]/30">
-            <Leaf className="w-5 h-5 text-[#A3B18A]" />
+            <Leaf className="w-5 h-5 text-[#C4ECCF]" />
           </div>
         </div>
 
         <div className="mt-8 z-10">
           <div className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-white/10 text-white text-xs font-semibold border border-white/10">
-            <Flame className="w-3.5 h-3.5 text-[#A3B18A] animate-pulse" />
+            <Flame className="w-3.5 h-3.5 text-[#C4ECCF] animate-pulse" />
             <span>Eco Streak Active</span>
           </div>
           <p className="text-xs text-[#F2F1EA]/70 mt-2 font-mono">

@@ -111,6 +111,7 @@ export default function App() {
         {/* Toggle Expand/Retract Handle Button */}
         <button
           onClick={() => setSidebarOpen(!sidebarOpen)}
+          id="sidebar-expand-toggle-btn"
           className="absolute -right-3 top-24 bg-[#5A5A40] text-white rounded-full p-1 border border-[#DCDAD2] hover:bg-[#41412E] active:scale-90 transition-all shadow-sm z-50 cursor-pointer"
           title={sidebarOpen ? "Retract Sidebar" : "Expand Sidebar"}
           aria-expanded={sidebarOpen}
@@ -144,6 +145,7 @@ export default function App() {
             return (
               <button
                 key={item.id}
+                id={`sidebar-navigation-tab-${item.id}`}
                 onClick={() => handleScrollTo(item.id)}
                 className={`w-full flex items-center gap-3 p-2 rounded-xl transition-all text-left group cursor-pointer ${
                   isActive 
@@ -204,6 +206,7 @@ export default function App() {
             <div className="flex items-center bg-[#F8F7F2] border border-[#DCDAD2] p-1 rounded-lg select-none">
               <button
                 onClick={() => setTheme("light")}
+                id="theme-toggle-light-btn"
                 className={`flex items-center gap-1.5 px-2.5 py-1 rounded-md text-[10px] font-bold cursor-pointer transition-all ${
                   theme === "light"
                     ? "bg-[#5A5A40] text-white shadow-xs"
@@ -217,6 +220,7 @@ export default function App() {
               </button>
               <button
                 onClick={() => setTheme("deep-forest")}
+                id="theme-toggle-dark-btn"
                 className={`flex items-center gap-1.5 px-2.5 py-1 rounded-md text-[10px] font-bold cursor-pointer transition-all ${
                   theme === "deep-forest"
                     ? "bg-[#92B49D] text-[#0A0F0C] shadow-xs"
@@ -262,6 +266,7 @@ export default function App() {
                 </div>
                 <button
                   onClick={handleSignOut}
+                  id="profile-action-reset-btn"
                   className="flex items-center gap-1.5 bg-[#F8F7F2] hover:bg-[#EBEAE3] text-[#2C2C24] rounded-lg px-2.5 py-1.5 text-xs font-semibold border border-[#DCDAD2] cursor-pointer shadow-sm active:scale-95 transition-all"
                   title="Sign out or reset"
                 >
@@ -272,6 +277,7 @@ export default function App() {
             ) : (
               <button
                 onClick={handleSignIn}
+                id="profile-action-signin-btn"
                 className="flex items-center gap-1.5 bg-[#5A5A40] hover:bg-[#41412E] text-white rounded-lg px-3 py-1.5 text-xs font-bold shadow-sm cursor-pointer active:scale-95 transition-all"
               >
                 <LogIn className="w-3.5 h-3.5" />
@@ -313,6 +319,7 @@ export default function App() {
               return (
                 <button
                   key={item.id}
+                  id={`shortcut-navigation-tab-${item.id}`}
                   onClick={() => handleScrollTo(item.id)}
                   className={`flex flex-col items-center justify-center p-3 rounded-xl border transition-all cursor-pointer text-center relative group overflow-hidden ${
                     isActive

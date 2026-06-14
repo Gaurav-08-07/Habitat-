@@ -77,6 +77,7 @@ export default function ImpactLoggerWidget({ impactLogs, addImpactLog }: ImpactL
                 {(Object.keys(EMISSION_CONVERSIONS) as ActivityType[]).map((type) => (
                   <button
                     key={type}
+                    id={`impact-category-btn-${type}`}
                     type="button"
                     role="tab"
                     aria-selected={activeType === type}
@@ -159,6 +160,7 @@ export default function ImpactLoggerWidget({ impactLogs, addImpactLog }: ImpactL
 
           <button
             type="button"
+            id="impact-submit-btn"
             onClick={handleSubmit}
             className="w-full bg-[#5A5A40] text-white rounded-xl py-2.5 text-xs font-bold hover:bg-[#41412E] active:scale-95 transition-all flex items-center justify-center gap-1.5 cursor-pointer shadow-sm"
           >

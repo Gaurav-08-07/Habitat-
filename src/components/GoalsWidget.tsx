@@ -50,6 +50,7 @@ export default function GoalsWidget({ goals, createGoal }: GoalsWidgetProps) {
 
         <button
           onClick={() => setShowCreator(!showCreator)}
+          id="goals-creator-toggle-btn"
           className="flex items-center gap-1 bg-[#5A5A40] text-white rounded-lg px-2.5 py-1.5 text-xs font-semibold hover:bg-[#41412E] transition-colors cursor-pointer"
           aria-expanded={showCreator}
           aria-label={showCreator ? "Show Actions" : "Create New Goal Target"}
@@ -148,6 +149,7 @@ export default function GoalsWidget({ goals, createGoal }: GoalsWidgetProps) {
             <div className="flex justify-end gap-1.5 pt-1">
               <button
                 type="button"
+                id="goals-creator-cancel-btn"
                 onClick={() => setShowCreator(false)}
                 className="bg-[#F8F7F2] text-[#525146] rounded-lg px-3 py-1.5 text-xs font-semibold border border-[#DCDAD2] hover:bg-[#EBEAE3] transition-colors"
               >
@@ -155,6 +157,7 @@ export default function GoalsWidget({ goals, createGoal }: GoalsWidgetProps) {
               </button>
               <button
                 type="submit"
+                id="goals-creator-submit-btn"
                 className="bg-[#5A5A40] text-white rounded-lg px-3 py-1.5 text-xs font-semibold hover:bg-[#41412E] transition-colors"
               >
                 Launch goal

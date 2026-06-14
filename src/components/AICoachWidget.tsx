@@ -21,8 +21,8 @@ export default function AICoachWidget({ suggestions, loading, error, onRefresh }
       <div className="z-10">
         <div className="flex justify-between items-start pb-4 border-b border-[#A3B18A]/20">
           <div className="flex items-center gap-3">
-            <span className="bg-[#708238]/30 text-[#A3B18A] rounded-full w-10 h-10 flex items-center justify-center border border-[#A3B18A]/20">
-              <Sparkles className="w-5 h-5 text-[#A3B18A] animate-pulse" />
+            <span className="bg-[#708238]/30 text-[#C4ECCF] rounded-full w-10 h-10 flex items-center justify-center border border-[#A3B18A]/20">
+              <Sparkles className="w-5 h-5 text-[#C4ECCF] animate-pulse" />
             </span>
             <div>
               <h3 className="font-display text-base font-bold text-[#F2F1EA] flex items-center gap-1.5 leading-none">
@@ -41,7 +41,7 @@ export default function AICoachWidget({ suggestions, loading, error, onRefresh }
             title="Refresh green suggestions"
             aria-label="Refresh green suggestions"
           >
-            <RefreshCw className={`w-3.5 h-3.5 text-[#A3B18A] ${loading ? "animate-spin" : "group-hover:rotate-45 transition-transform"}`} />
+            <RefreshCw className={`w-3.5 h-3.5 text-[#C4ECCF] ${loading ? "animate-spin" : "group-hover:rotate-45 transition-transform"}`} />
           </button>
         </div>
 
@@ -49,8 +49,8 @@ export default function AICoachWidget({ suggestions, loading, error, onRefresh }
         {loading ? (
           <div className="py-12 flex flex-col items-center justify-center gap-3">
             <div className="relative flex items-center justify-center">
-              <div className="animate-spin rounded-full h-8 w-8 border-2 border-[#A3B18A] border-t-transparent"></div>
-              <Sparkles className="w-4 h-4 text-[#A3B18A] absolute" />
+              <div className="animate-spin rounded-full h-8 w-8 border-2 border-[#C4ECCF] border-t-transparent"></div>
+              <Sparkles className="w-4 h-4 text-[#C4ECCF] absolute" />
             </div>
             <p className="text-xs text-[#F2F1EA]/80 font-medium animate-pulse">
               Analyzing daily logs & tracking goals progress...
@@ -62,7 +62,7 @@ export default function AICoachWidget({ suggestions, loading, error, onRefresh }
             <p className="text-xs text-rose-300">Could not retrieve automated recommendations.</p>
             <button
               onClick={onRefresh}
-              className="text-[11px] font-semibold text-[#A3B18A] underline hover:text-white"
+              className="text-[11px] font-semibold text-[#C4ECCF] underline hover:text-white"
             >
               Retry Connection
             </button>
@@ -89,7 +89,7 @@ export default function AICoachWidget({ suggestions, loading, error, onRefresh }
                     transition={{ delay: idx * 0.1 }}
                     className="flex items-start gap-1.5 text-xs text-white/90 leading-relaxed font-semibold bg-[#2C2C24]/20 p-2.5 rounded-lg border border-[#A3B18A]/10"
                   >
-                    <span className="text-[#A3B18A] mt-0.5">•</span>
+                    <span className="text-[#C4ECCF] mt-0.5">•</span>
                     <span>{tip}</span>
                   </motion.li>
                 ))}
@@ -119,7 +119,7 @@ export default function AICoachWidget({ suggestions, loading, error, onRefresh }
             )}
           </div>
         ) : (
-          <div className="py-12 text-center text-[#A3B18A]/60">
+          <div className="py-12 text-center text-[#C4ECCF]/80">
             <p className="text-xs">No advice available yet. Click refresh to query your AI coach!</p>
           </div>
         )}
