@@ -104,14 +104,14 @@ export default function StatsWidget({ profile, habitLogs, impactLogs }: StatsWid
       >
         <div className="flex justify-between items-start">
           <div>
-            <p className="text-xs uppercase tracking-widest text-[#8A887C] font-bold">Gamified Progress</p>
+            <p className="text-xs uppercase tracking-widest text-[#525146] font-bold">Gamified Progress</p>
             <div className="flex items-baseline gap-2 mt-1">
               <h3 className="font-display text-4xl font-bold text-[#2C2C24]">Lvl {profile.level}</h3>
               <span className="text-xs font-bold text-[#708238] bg-[#708238]/10 px-2.5 py-0.5 rounded-md">
                 {profile.points} total XP
               </span>
             </div>
-            <p className="text-xs text-[#8A887C] mt-1">Earn points by checking green habits</p>
+            <p className="text-xs text-[#525146] mt-1">Earn points by checking green habits</p>
           </div>
           <div className="bg-[#F8F7F2] p-2.5 rounded-lg border border-[#EBEAE3] text-[#5A5A40]">
             <Award className="w-5 h-5" />
@@ -131,7 +131,7 @@ export default function StatsWidget({ profile, habitLogs, impactLogs }: StatsWid
               className="h-full bg-[#5A5A40] rounded-full"
             />
           </div>
-          <p className="text-[11px] text-[#8A887C] mt-2 text-right">
+          <p className="text-[11px] text-[#525146] mt-2 text-right">
             {250 - relativeXP} XP needed for Level {profile.level + 1}
           </p>
         </div>
@@ -147,9 +147,9 @@ export default function StatsWidget({ profile, habitLogs, impactLogs }: StatsWid
       >
         <div className="flex justify-between items-start">
           <div>
-            <p className="text-xs uppercase tracking-widest text-[#8A887C] font-bold">Offset Sectors</p>
+            <p className="text-xs uppercase tracking-widest text-[#525146] font-bold">Offset Sectors</p>
             <h4 className="font-display text-lg font-bold text-[#2C2C24] mt-1">Sustainability Scope</h4>
-            <p className="text-xs text-[#8A887C] mt-1">Saved distribution per lifestyle category</p>
+            <p className="text-xs text-[#525146] mt-1">Saved distribution per lifestyle category</p>
           </div>
           <div className="bg-[#F8F7F2] p-2.5 rounded-lg border border-[#EBEAE3] text-[#5A5A40]">
             <TrendingUp className="w-5 h-5" />
@@ -163,7 +163,7 @@ export default function StatsWidget({ profile, habitLogs, impactLogs }: StatsWid
               <div key={category} className="space-y-0.5">
                 <div className="flex justify-between text-xs font-medium">
                   <span className="capitalize text-[#2C2C24] font-semibold">{category}</span>
-                  <span className="text-[#8A887C] font-mono text-[11px]">{value.toFixed(1)} kg</span>
+                  <span className="text-[#525146] font-mono text-[11px]">{value.toFixed(1)} kg</span>
                 </div>
                 <div className="w-full bg-[#F8F7F2] h-1.5 rounded-full overflow-hidden border border-[#EBEAE3]">
                   <motion.div 

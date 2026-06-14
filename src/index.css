@@ -2,25 +2,171 @@
 @import "tailwindcss";
 
 @theme {
-  --color-natural-bg: #F2F1EA;
-  --color-natural-text: #2C2C24;
-  --color-natural-muted: #525146;
-  --color-natural-primary: #5A5A40;
-  --color-natural-secondary: #A3B18A;
-  --color-natural-accent: #708238;
-  --color-natural-border: #DCDAD2;
-  --color-natural-card: #FFFFFF;
-  --color-natural-highlight: #F8F7F2;
+  --color-natural-bg: var(--color-bg);
+  --color-natural-text: var(--color-text);
+  --color-natural-muted: var(--color-muted);
+  --color-natural-primary: var(--color-primary);
+  --color-natural-secondary: var(--color-secondary);
+  --color-natural-accent: var(--color-accent);
+  --color-natural-border: var(--color-border);
+  --color-natural-card: var(--color-card);
+  --color-natural-highlight: var(--color-highlight);
 
   --font-sans: "Plus Jakarta Sans", ui-sans-serif, system-ui, sans-serif;
   --font-display: "Outfit", sans-serif;
   --font-mono: "Fira Code", ui-monospace, SFMono-Regular, monospace;
 }
 
+:root {
+  --color-bg: #F2F1EA;
+  --color-text: #2C2C24;
+  --color-muted: #525146;
+  --color-primary: #5A5A40;
+  --color-secondary: #A3B18A;
+  --color-accent: #708238;
+  --color-border: #DCDAD2;
+  --color-card: #FFFFFF;
+  --color-highlight: #F8F7F2;
+  --color-sidebar: #FFFFFF;
+  --color-header: #FFFFFF;
+}
+
+/* Deep Forest Themes: Sylvan Earth Dark Tones */
+:root.dark {
+  --color-bg: #0C120E;          /* Deep moss nocturnal background */
+  --color-text: #E5EDE7;        /* Crisp sylvan off-white */
+  --color-muted: #829587;       /* Forest fog sage */
+  --color-primary: #92B49D;     /* Healthy ferns green */
+  --color-secondary: #3B5242;   /* Sylvan spruce green */
+  --color-accent: #87A96B;      /* Warm golden moss bud */
+  --color-border: #1B2920;      /* Dark pine wood node */
+  --color-card: #121A15;        /* Forest floor canopy shadow */
+  --color-highlight: #18231C;   /* Leaf shade highlight */
+  --color-sidebar: #0E1611;     /* Shaded undergrowth */
+  --color-header: #121A15;      /* Forest floor canopy shadow */
+}
+
 body {
   font-family: var(--font-sans);
-  background-color: #F2F1EA;
-  color: #2C2C24;
+  background-color: var(--color-bg);
+  color: var(--color-text);
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+/* Specific Dark Mode overrides for tailwind helper utility classes */
+:root.dark body {
+  background-color: var(--color-bg);
+  color: var(--color-text);
+}
+
+:root.dark .bg-white {
+  background-color: var(--color-card) !important;
+  color: var(--color-text);
+}
+
+:root.dark .bg-\[\#F8F7F2\] {
+  background-color: var(--color-highlight) !important;
+}
+
+:root.dark .bg-\[\#F8F7F2\]\/50 {
+  background-color: rgba(24, 35, 28, 0.5) !important;
+}
+
+:root.dark .bg-\[\#F2F1EA\] {
+  background-color: var(--color-bg) !important;
+}
+
+:root.dark .text-\[\#2C2C24\] {
+  color: var(--color-text) !important;
+}
+
+:root.dark .text-\[\#8A887C\] {
+  color: var(--color-muted) !important;
+}
+
+:root.dark .text-\[\#525146\] {
+  color: var(--color-muted) !important;
+}
+
+:root.dark .text-slate-650,
+:root.dark .text-slate-600,
+:root.dark .text-slate-500,
+:root.dark .text-slate-400 {
+  color: var(--color-muted) !important;
+}
+
+:root.dark .text-\[\#5A5A40\] {
+  color: var(--color-primary) !important;
+}
+
+:root.dark .bg-\[\#5A5A40\] {
+  background-color: var(--color-primary) !important;
+  color: #0A0F0C !important;
+}
+
+/* Ensure nice and clear dark text for buttons styled as solid deep-forest primary when hovered/active */
+:root.dark button.bg-\[\#5A5A40\],
+:root.dark .bg-\[\#5A5A40\].text-white,
+:root.dark .bg-\[\#5A5A40\] .text-white {
+  color: #0C120E !important;
+}
+
+:root.dark .border-\[\#DCDAD2\] {
+  border-color: var(--color-border) !important;
+}
+
+:root.dark .border-\[\#EBEAE3\] {
+  border-color: var(--color-border) !important;
+}
+
+:root.dark .hover\:bg-\[\#EBEAE3\]:hover {
+  background-color: var(--color-highlight) !important;
+}
+
+:root.dark aside {
+  background-color: var(--color-sidebar) !important;
+  border-color: var(--color-border) !important;
+}
+
+:root.dark header {
+  background-color: var(--color-header) !important;
+  border-color: var(--color-border) !important;
+}
+
+:root.dark .border-dashed {
+  border-color: var(--color-border) !important;
+}
+
+:root.dark select, 
+:root.dark input[type="text"], 
+:root.dark input[type="date"] {
+  background-color: var(--color-highlight) !important;
+  color: var(--color-text) !important;
+  border-color: var(--color-border) !important;
+}
+
+:root.dark input[type="range"] {
+  background-color: var(--color-border) !important;
+}
+
+:root.dark .bg-\[\#5A5A40\]\/10 {
+  background-color: rgba(146, 180, 157, 0.15) !important;
+}
+
+:root.dark .text-\[\#708238\] {
+  color: var(--color-accent) !important;
+}
+
+:root.dark .bg-\[\#708238\]\/10 {
+  background-color: rgba(135, 169, 107, 0.15) !important;
+}
+
+:root.dark .border-\[\#708238\]\/20 {
+  border-color: rgba(135, 169, 107, 0.3) !important;
+}
+
+:root.dark .border-\[\#708238\] {
+  border-color: var(--color-accent) !important;
 }
 
 /* Custom scrollbars for dashboard widgets */
@@ -31,9 +177,9 @@ body {
   background: transparent;
 }
 ::-webkit-scrollbar-thumb {
-  background: #DCDAD2;
+  background: var(--color-border);
   border-radius: 9999px;
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: #8A887C;
+  background: var(--color-muted);
 }

@@ -28,7 +28,7 @@ export default function AICoachWidget({ suggestions, loading, error, onRefresh }
               <h3 className="font-display text-base font-bold text-[#F2F1EA] flex items-center gap-1.5 leading-none">
                 AI Green Coach
               </h3>
-              <p className="text-[10px] text-[#A3B18A] mt-1 font-medium select-none">
+              <p className="text-[10px] text-[#C4ECCF] mt-1 font-medium select-none">
                 Powered by Gemini 3.5 &bull; Real-Time Data Analysis
               </p>
             </div>
@@ -76,7 +76,7 @@ export default function AICoachWidget({ suggestions, loading, error, onRefresh }
 
             {/* Daily actionable tips */}
             <div className="space-y-2">
-              <h4 className="text-[11px] uppercase tracking-wider font-extrabold text-[#A3B18A] flex items-center gap-1.5 select-none">
+              <h4 className="text-[11px] uppercase tracking-wider font-extrabold text-[#C4ECCF] flex items-center gap-1.5 select-none">
                 <Lightbulb className="w-3.5 h-3.5 text-[#F2F1EA]" />
                 Custom Sustainability Handouts
               </h4>
@@ -99,8 +99,8 @@ export default function AICoachWidget({ suggestions, loading, error, onRefresh }
             {/* Goal-oriented strategies */}
             {suggestions.goalStrategies && suggestions.goalStrategies.length > 0 && (
               <div className="space-y-2">
-                <h4 className="text-[11px] uppercase tracking-wider font-extrabold text-[#A3B18A] flex items-center gap-1.5 select-none">
-                  <Compass className="w-3.5 h-3.5 text-[#A3B18A]" />
+                <h4 className="text-[11px] uppercase tracking-wider font-extrabold text-[#C4ECCF] flex items-center gap-1.5 select-none">
+                  <Compass className="w-3.5 h-3.5 text-[#C4ECCF]" />
                   Target-Driven Action Items
                 </h4>
                 <div className="space-y-1.5">
@@ -125,7 +125,7 @@ export default function AICoachWidget({ suggestions, loading, error, onRefresh }
         )}
       </div>
 
-      <div className="border-t border-[#A3B18A]/20 pt-4 mt-6 flex justify-between items-center text-[10px] text-[#A3B18A]/70 select-none z-10 font-mono">
+      <div className="border-t border-[#A3B18A]/20 pt-4 mt-6 flex justify-between items-center text-[10px] text-[#E5EDE7] select-none z-10 font-mono">
         <span>Active Feedback Mechanism</span>
         <span>Goal status synced</span>
       </div>

@@ -1,6 +1,6 @@
 {
-  "name": "Carbon Footprint & Habits Tracker",
-  "description": "Carbon footprint tracking and gamification platform for sustainable habits, custom environmental goals, real-time CO2 analytics, peer leaderboards, and automated AI assistance.",
+  "name": "Habitat",
+  "description": "Carbon footprint tracking and sustainability platform for environmental habits, custom goals, and real-time CO2 analytics.",
   "requestFramePermissions": [],
   "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
 }

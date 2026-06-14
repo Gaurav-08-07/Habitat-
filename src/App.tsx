@@ -10,7 +10,8 @@ import AICoachWidget from "./components/AICoachWidget";
 import { 
   Leaf, LogIn, LogOut, Info, ShieldAlert, Sparkles, AlertCircle,
   Award, TrendingUp, Activity, Calendar, Target, Trophy, 
-  ChevronLeft, ChevronRight, Menu, LayoutGrid, Monitor 
+  ChevronLeft, ChevronRight, Menu, LayoutGrid, Monitor,
+  Sun, Moon
 } from "lucide-react";
 import { isFirebaseConfigured } from "./lib/firebase";
 import { motion } from "motion/react";
@@ -31,6 +32,20 @@ const NAVIGATION_ITEMS = [
 export default function App() {
   const [sidebarOpen, setSidebarOpen] = React.useState(true);
   const [activeTab, setActiveTab] = React.useState<string | null>(null);
+  const [theme, setTheme] = React.useState<"light" | "deep-forest">(() => {
+    const saved = localStorage.getItem("habitat-theme");
+    return (saved === "deep-forest" || saved === "dark") ? "deep-forest" : "light";
+  });
+
+  React.useEffect(() => {
+    if (theme === "deep-forest") {
+      document.documentElement.classList.add("dark");
+      localStorage.setItem("habitat-theme", "deep-forest");
+    } else {
+      document.documentElement.classList.remove("dark");
+      localStorage.setItem("habitat-theme", "light");
+    }
+  }, [theme]);
 
   const {
     currentUser,
@@ -43,6 +58,8 @@ export default function App() {
     loading,
     aiLoading,
     aiError,
+    toastMessage,
+    updateDisplayName,
     completeHabit,
     addImpactLog,
     createGoal,
@@ -103,10 +120,17 @@ export default function App() {
         </button>
 
         {/* Sidebar Frame Header */}
-        <div className="p-3 border-b border-[#EBEAE3] flex items-center gap-2 overflow-hidden whitespace-nowrap">
-          <Menu className="w-4 h-4 text-[#5A5A40] flex-shrink-0" />
+        <div className="p-3.5 border-b border-[#EBEAE3] flex flex-col gap-1 overflow-hidden whitespace-nowrap">
+          <div className="flex items-center gap-2">
+            <Leaf className="w-4.5 h-4.5 text-[#5A5A40] flex-shrink-0" />
+            {sidebarOpen && (
+              <span className="text-base font-black text-[#5A5A40] tracking-tight animate-fade-in">
+                Habitat
+              </span>
+            )}
+          </div>
           {sidebarOpen && (
-            <span className="text-[10px] font-black text-[#5A5A40] uppercase tracking-wider animate-fade-in">
+            <span className="text-[9px] font-bold text-[#525146]/80 uppercase tracking-widest pl-6.5 animate-fade-in">
               Navigation Panel
             </span>
           )}
@@ -169,17 +193,43 @@ export default function App() {
               <Leaf className="w-5 h-5" />
             </div>
             <div>
-              <h1 className="font-display text-xl font-bold tracking-tight text-[#5A5A40] flex items-center gap-1.5">
-                Carbon Footprint & Habits Tracker
+              <h1 className="font-display text-xl font-black tracking-tight text-[#5A5A40] flex items-center gap-1.5 animate-fade-in">
+                Habitat
               </h1>
-              <p className="text-xs text-[#525146] font-medium">
-                Gamified sustainability dashboards logging real-world environmental offsets.
-              </p>
             </div>
-          </div>
+          </div>          {/* Sync mode and Auth Action controls */}
+          <div className="flex flex-wrap items-center gap-3 w-full sm:w-auto justify-end">
+            
+            {/* Theme Toggle Switch */}
+            <div className="flex items-center bg-[#F8F7F2] border border-[#DCDAD2] p-1 rounded-lg select-none">
+              <button
+                onClick={() => setTheme("light")}
+                className={`flex items-center gap-1.5 px-2.5 py-1 rounded-md text-[10px] font-bold cursor-pointer transition-all ${
+                  theme === "light"
+                    ? "bg-[#5A5A40] text-white shadow-xs"
+                    : "text-[#525146] hover:bg-[#EBEAE3]"
+                }`}
+                title="Sylvan Light Mode"
+                aria-label="Switch to Sylvan Light Mode"
+              >
+                <Sun className="w-3 h-3" />
+                <span>Light</span>
+              </button>
+              <button
+                onClick={() => setTheme("deep-forest")}
+                className={`flex items-center gap-1.5 px-2.5 py-1 rounded-md text-[10px] font-bold cursor-pointer transition-all ${
+                  theme === "deep-forest"
+                    ? "bg-[#92B49D] text-[#0A0F0C] shadow-xs"
+                    : "text-[#525146] hover:bg-[#EBEAE3]"
+                }`}
+                title="Deep Forest Dark Mode"
+                aria-label="Switch to Deep Forest Dark Mode"
+              >
+                <Moon className="w-3 h-3" />
+                <span>Deep Forest</span>
+              </button>
+            </div>
 
-          {/* Sync mode and Auth Action controls */}
-          <div className="flex items-center gap-3 w-full sm:w-auto justify-end">
             <span className={`inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-[10px] font-bold border ${
               isFirebaseConfigured
                 ? "bg-[#5A5A40]/10 text-[#5A5A40] border-[#DCDAD2]"
@@ -198,9 +248,14 @@ export default function App() {
                   className="w-8 h-8 rounded-full border border-[#DCDAD2] object-cover"
                 />
                 <div className="hidden md:block text-left">
-                  <p className="text-xs font-bold text-[#2C2C24] leading-tight">
-                    {userProfile.displayName}
-                  </p>
+                  <input
+                    type="text"
+                    value={userProfile.displayName}
+                    onChange={(e) => updateDisplayName(e.target.value)}
+                    className="text-xs font-bold text-[#2C2C24] bg-transparent border-b border-dashed border-[#5A5A40]/40 hover:border-[#5A5A40] focus:border-solid focus:outline-none focus:ring-0 p-0 leading-tight w-24"
+                    title="Click to edit display name"
+                    aria-label="Edit display name"
+                  />
                   <p className="text-[10px] text-[#525146] font-medium leading-none">
                     Guest Account
                   </p>
@@ -342,9 +397,21 @@ export default function App() {
 
       {/* Humble green footer */}
       <footer className="mt-16 text-center text-[10px] text-[#525146] font-mono select-none pb-8">
-        <p>© 2026 Carbon & Habits Tracker &bull; Gamified Ecology Mission</p>
+        <p>© 2026 Habitat &bull; Ecology Mission</p>
         <p className="mt-1">Crafted elegantly with a warm Natural Tones palette to motivate community carbon reductions</p>
       </footer>
+
+      {/* Toast Notification HUD */}
+      {toastMessage && (
+        <motion.div
+          initial={{ opacity: 0, y: 30, scale: 0.95 }}
+          animate={{ opacity: 1, y: 0, scale: 1 }}
+          className="fixed bottom-5 right-5 z-50 max-w-sm bg-[#525146] text-[#F2F1EA] px-4 py-3 rounded-xl shadow-xl flex items-center gap-2.5 border border-[#5A5A40] font-sans"
+        >
+          <Leaf className="w-4 h-4 text-[#C4ECCF] flex-shrink-0 animate-bounce" />
+          <span className="text-xs font-semibold leading-relaxed">{toastMessage}</span>
+        </motion.div>
+      )}
     </div>
   );
 }

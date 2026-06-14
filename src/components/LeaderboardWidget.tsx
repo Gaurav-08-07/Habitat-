@@ -103,14 +103,14 @@ export default function LeaderboardWidget({ entries, currentUserId }: Leaderboar
                     <h5 className={`text-xs font-black truncate max-w-[120px] ${isMe ? "text-white" : "text-[#2C2C24]"}`}>
                       {entry.displayName}
                     </h5>
-                    <p className={`text-[10px] ${isMe ? "text-[#A3B18A] font-semibold" : "text-[#525146] font-medium"}`}>
+                    <p className={`text-[10px] ${isMe ? "text-[#E5EDE7] font-semibold" : "text-[#525146] font-medium"}`}>
                       Lvl {entry.level} &bull; {entry.points} XP
                     </p>
                   </div>
                 </div>
 
                 <div className="text-right">
-                  <span className={`text-xs font-mono font-bold ${isMe ? "text-[#A3B18A]" : "text-[#708238]"}`}>
+                  <span className={`text-xs font-mono font-bold ${isMe ? "text-[#C4ECCF]" : "text-[#708238]"}`}>
                     -{entry.totalOffset.toFixed(1)} kg
                   </span>
                   <p className="text-[9px] text-[#525146] font-mono leading-none mt-0.5">offset</p>

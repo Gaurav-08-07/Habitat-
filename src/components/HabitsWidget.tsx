@@ -27,8 +27,8 @@ export default function HabitsWidget({ habitLogs, completeHabit, todayString }: 
     switch (cat) {
       case "transport": return "text-[#708238] bg-[#708238]/10 border-[#708238]/20";
       case "energy": return "text-[#5A5A40] bg-[#5A5A40]/10 border-[#5A5A40]/20";
-      case "diet": return "text-[#A3B18A] bg-[#A3B18A]/10 border-[#A3B18A]/20";
-      case "water": return "text-[#A3B18A] bg-[#A3B18A]/10 border-[#A3B18A]/20";
+      case "diet": return "text-[#708238] bg-[#708238]/10 border-[#708238]/20";
+      case "water": return "text-[#5A5A40] bg-[#5A5A40]/10 border-[#5A5A40]/20";
       case "waste": return "text-[#525146] bg-[#525146]/10 border-[#525146]/20";
       default: return "text-[#2C2C24] bg-[#F8F7F2] border-[#EBEAE3]";
     }

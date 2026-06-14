@@ -27,6 +27,14 @@ export function useCarbonTracker() {
   const [loading, setLoading] = useState<boolean>(true);
   const [aiLoading, setAiLoading] = useState<boolean>(false);
   const [aiError, setAiError] = useState<string | null>(null);
+  const [toastMessage, setToastMessage] = useState<string | null>(null);
+
+  const showToast = (message: string) => {
+    setToastMessage(message);
+    setTimeout(() => {
+      setToastMessage((curr) => curr === message ? null : curr);
+    }, 4500);
+  };
 
   // Helper date string in local browser time zone (YYYY-MM-DD)
   const getTodayString = () => {
@@ -249,6 +257,34 @@ export function useCarbonTracker() {
     }
   };
 
+  // Update Display Name directly without prompts
+  const updateDisplayName = async (newName: string) => {
+    if (!userProfile) return;
+    const cleanName = newName.trim();
+    if (!cleanName) return;
+
+    const updated = {
+      ...userProfile,
+      displayName: cleanName,
+      updatedAt: new Date().toISOString()
+    };
+    setUserProfile(updated);
+
+    if (isFirebaseConfigured && db && currentUser) {
+      try {
+        await updateDoc(doc(db, "users", currentUser.uid), {
+          displayName: cleanName,
+          updatedAt: new Date().toISOString()
+        });
+      } catch (error) {
+        handleFirestoreError(error, OperationType.UPDATE, `users/${currentUser.uid}`);
+      }
+    } else {
+      localStorage.setItem(`${LOCAL_STORAGE_PREFIX}profile`, JSON.stringify(updated));
+    }
+    showToast("👤 Avatar identity name updated!");
+  };
+
   // Sign In Trigger
   const handleSignIn = async () => {
     if (isFirebaseConfigured && auth && googleProvider) {
@@ -258,17 +294,7 @@ export function useCarbonTracker() {
         console.error("OAuth Sign In Failed:", error);
       }
     } else {
-      // Offline/local login toggling
-      const fakeName = prompt("Enter your username for the leaderboard:", userProfile?.displayName || "Eco Warrior");
-      if (fakeName) {
-        const updated = {
-          ...userProfile!,
-          displayName: fakeName,
-          updatedAt: new Date().toISOString()
-        };
-        setUserProfile(updated);
-        localStorage.setItem(`${LOCAL_STORAGE_PREFIX}profile`, JSON.stringify(updated));
-      }
+      showToast("💡 You can edit your displayName directly inside the Guest Account section anytime!");
     }
   };
 
@@ -277,14 +303,13 @@ export function useCarbonTracker() {
     if (isFirebaseConfigured && auth) {
       await signOut(auth);
     } else {
-      // Local reset
-      if (confirm("Reset local progress data?")) {
-        localStorage.removeItem(`${LOCAL_STORAGE_PREFIX}profile`);
-        localStorage.removeItem(`${LOCAL_STORAGE_PREFIX}habitLogs`);
-        localStorage.removeItem(`${LOCAL_STORAGE_PREFIX}impactLogs`);
-        localStorage.removeItem(`${LOCAL_STORAGE_PREFIX}goals`);
-        loadLocalFallbackState();
-      }
+      // Local reset without block confirm
+      localStorage.removeItem(`${LOCAL_STORAGE_PREFIX}profile`);
+      localStorage.removeItem(`${LOCAL_STORAGE_PREFIX}habitLogs`);
+      localStorage.removeItem(`${LOCAL_STORAGE_PREFIX}impactLogs`);
+      localStorage.removeItem(`${LOCAL_STORAGE_PREFIX}goals`);
+      loadLocalFallbackState();
+      showToast("🧹 Local progress and logs successfully reset!");
     }
   };
 
@@ -533,7 +558,7 @@ export function useCarbonTracker() {
     };
 
     setUserProfile(updatedProfile);
-    alert(`🎉 Goal Accomplished: "${goalTitle}"! You've received a green bonus of 100 XP!`);
+    showToast(`🎉 Goal Accomplished: "${goalTitle}"! +100 XP Bonus!`);
 
     if (isFirebaseConfigured && db && currentUser) {
       updateDoc(doc(db, "users", currentUser.uid), {
@@ -600,6 +625,9 @@ export function useCarbonTracker() {
     loading,
     aiLoading,
     aiError,
+    toastMessage,
+    showToast,
+    updateDisplayName,
     completeHabit,
     addImpactLog,
     createGoal,
